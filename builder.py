@@ -26,6 +26,7 @@ class MoCo(nn.Module):
         elif arch == 'densenet63':base_encoder = densenet63
         elif arch == 'densenet21':base_encoder = densenet21
         elif arch == 'densenet29':base_encoder = densenet29
+        else:raise ValueError('Unknown arch {}'.format(arch))
 
         # create the encoders
         # num_classes is the output fc dimension

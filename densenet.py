@@ -6,7 +6,7 @@ from collections import OrderedDict
 from torch import Tensor
 from torch.jit.annotations import List
 
-__all__ = ['DenseNet', 'densenet63', 'densenet11']
+__all__ = ['DenseNet', 'densenet63', 'densenet11', 'densenet21', 'densenet29', '_densenet']
 
 class _DenseLayer(nn.Module):
     def __init__(self, num_input_features, growth_rate, bn_size, drop_rate, memory_efficient=False):
@@ -127,7 +127,7 @@ class DenseNet(nn.Module):
     """
 
     def __init__(self, in_features, growth_rate=32, block_config=(6, 12, 24, 16),
-                 num_init_features=64, bn_size=4, drop_rate=0, num_classes=1000, memory_efficient=False, feature_extract=False):
+                 num_init_features=64, bn_size=4, drop_rate=0, num_classes=1000, memory_efficient=False, return_feature=False):
 
         super(DenseNet, self).__init__()
 
@@ -138,7 +138,7 @@ class DenseNet(nn.Module):
             ('relu0', nn.ReLU(inplace=True)),
         ]))
         
-        self.feature_extract = feature_extract
+        self.return_feature = return_feature
         
         # Each denseblock
         num_features = num_init_features
@@ -177,7 +177,7 @@ class DenseNet(nn.Module):
 
     def forward(self, x):
         features = self.features(x)
-        if self.feature_extract:
+        if self.return_feature:
             return torch.flatten(features, 1)
         out = F.relu(features, inplace=True)
         out = torch.flatten(out, 1)
@@ -190,10 +190,10 @@ def _densenet(arch, in_features, growth_rate, block_config, num_init_features, *
     return model
 
 def densenet63(in_features, **kwargs):
-    return _densenet('densenet63', in_features, 16, (3, 6, 12, 8), 32, **kwargs)
+    return _densenet('densenet63', in_features, 16, (3, 6, 12,8), 32, **kwargs)
 
 def densenet11(in_features, **kwargs):
-    return _densenet('densenet11', in_features, 16, (3,), 16, **kwargs)
+    return _densenet('densenet11', in_features, 16, (3,        ), 16, **kwargs)
 
 def densenet21(in_features, **kwargs):
     return _densenet('densenet21', in_features, 16, (2, 2, 2, 2), 32, **kwargs)

@@ -1,6 +1,6 @@
 import numpy as np
 import torch.utils.data
-from densenet import _densenet
+from densenet import *
 
 class TwoCropsTransform:
     """Take two random crops of one input as the query and key."""
@@ -68,14 +68,26 @@ class MoCoDataset(torch.utils.data.Dataset):
     def __len__(self):
         return len(self.X)
 
-def load_pretrained_model(arch, in_features, checkpoint):
-    model_dict = {'densenet11':_densenet('densenet11', in_features, 16, (3,), 16),
-                  'densenet63':_densenet('densenet63', in_features, 16, (3,6,12,8), 32),
-                  'densenet21':_densenet('densenet21', in_features, 16, (2,2,2,2), 32),
-                  'densenet29':_densenet('densenet29', in_features, 16, (3,3,3,3), 32)
-                 }
-    model = model_dict[arch]
-    
+def get_model(arch, in_features, num_classes=1000, return_feature=False):
+    model = None
+
+    kwargs = {'num_classes': num_classes, 'return_feature':return_feature}
+    if arch == 'densenet11':
+        model = densenet11(in_features, **kwargs)
+    elif arch == 'densenet63':
+        model = densenet63(in_features, **kwargs)
+    elif arch == 'densenet21':
+        model = densenet21(in_features, **kwargs)
+    elif arch == 'densenet29':
+        model = densenet29(in_features, **kwargs)
+    else:
+        raise ValueError("Unknown arch {}".format(arch))
+
+    return model
+
+def load_pretrained_model(arch, in_features, checkpoint, num_classes=1000, return_feature=True):
+    model = get_model(arch, in_features, num_classes=num_classes, return_feature=return_feature)
+
     for name, param in model.named_parameters():
         if name not in ['fc.weight', 'fc.bias']:
             param.requires_grad = False
@@ -110,8 +122,8 @@ def extract_features(model, X):
     features = []
     
     with torch.no_grad():
-        for images, _ in tqdm(val_loader):
-            output = model(images)
+        for x, _ in val_loader:
+            output = model(x)
             features.extend(output.detach().cpu().numpy())
             
     features = np.asarray(features)

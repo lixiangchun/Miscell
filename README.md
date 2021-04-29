@@ -36,7 +36,7 @@ import numpy as np
 X = np.load("example.npz")["x"]
 checkpoint = "checkpoint_0199.pth.tar"
 
-model = utils.load_pretrained_model(arch, in_features, checkpoint)
+model = utils.load_pretrained_model(arch, in_features, checkpoint, return_feature=True)
 
 features = utils.extract_features(model, X)
 
