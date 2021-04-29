@@ -1,5 +1,6 @@
 # Miscell
-Mining Information from Single-Cell high-throughput transcriptome data
+Mining Information from Single-Cell high-throughput transcriptome data.
+Some soure code was copied from [facebookresearch/MoCo](https://github.com/facebookresearch/moco).
 
 
 ### 1. Training Miscell on own data
