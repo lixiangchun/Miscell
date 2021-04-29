@@ -195,3 +195,9 @@ def densenet63(in_features, **kwargs):
 def densenet11(in_features, **kwargs):
     return _densenet('densenet11', in_features, 16, (3,), 16, **kwargs)
 
+def densenet21(in_features, **kwargs):
+    return _densenet('densenet21', in_features, 16, (2, 2, 2, 2), 32, **kwargs)
+
+def densenet29(in_features, **kwargs):
+    return _densenet('densenet29', in_features, 16, (3, 3, 3, 3), 32, **kwargs)
+

@@ -3,10 +3,14 @@ Mining Information from Single-Cell high-throughput transcriptome data
 
 
 ### 1. Training Miscell on own data
-As an example, we provided a preprocessed dataset on Baidu Disk (link:xxx) (extraction code: xxxxx)
+As an example, we provided a preprocessed dataset on [Baidu Disk](https://pan.baidu.com/s/1QfdWEsoqFxhnFwqhlNKlsw) (extraction code: acpq).
+
 ```{bash}
-arch=densenet12
-in_features=1506
+# Model name: densenet11, densenet21, densenet29 and densenet63
+arch=densenet11
+# Number of input features
+in_features=3186
+# We recommend the user to normalize the feature before training the model
 data=expr_orignal/x_hat.npz
 
 python main.py \
@@ -24,7 +28,7 @@ python main.py \
 
 
 ### 2. Extract feature with pretrained model
-```{python, eval=False}
+```{python}
 import utils
 import numpy as np
 
@@ -34,6 +38,27 @@ checkpoint = "checkpoint_0199.pth.tar"
 model = utils.load_pretrained_model(arch, in_features, checkpoint)
 
 features = utils.extract_features(model, X)
+
+```
+
+
+### 3. Perform clustering with DBSCAN algorithm
+Install [FIt-SNE]().
+
+```{python}
+import sklearn
+import sklearn.cluster
+sys.path.append('/home/lixc/software/github/FIt-SNE/')
+from fast_tsne import fast_tsne
+
+tsne = fast_tsne(features, seed=123, nthreads=12, perplexity_list=[30, 36, 42, 48])
+_, y = sklearn.cluster.dbscan(tsne, eps=1, min_samples=5, algorithm='auto')
+
+
+```
+
+### 4. Perform clustering with scannpy
+```{python}
 
 ```
 

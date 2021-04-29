@@ -96,13 +96,6 @@ args = parser.parse_args()
 assert args.in_features > 0
 
 
-model_dict = {'densenet11':_densenet('densenet11', args.in_features, 16, (3,), 16),
-              'densenet63':_densenet('densenet63', args.in_features, 16, (3,6,12,8), 32),
-              'densenet21':_densenet('densenet21', args.in_features, 16, (2,2,2,2), 32),
-              'densenet29':_densenet('densenet29', args.in_features, 16, (3,3,3,3), 32)
-             }
-model_names = model_dict.keys()
-
 def main(args):
 
     if args.seed is not None:
@@ -168,7 +161,7 @@ def main_worker(gpu, ngpus_per_node, args, x):
     print("=> number of features: {}".format(in_features))
         
     model = builder.MoCo(
-        model_dict[args.arch],
+        args.arch, args.in_features,
         args.moco_dim, args.moco_k, args.moco_m, args.moco_t, args.mlp)
     print(model)
 
