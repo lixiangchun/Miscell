@@ -27,8 +27,8 @@ from utils import *
 parser = argparse.ArgumentParser(description='PyTorch MoCo Training for Gene Expression')
 parser.add_argument('data', metavar='DATA',
                     help='path to dataset')
-parser.add_argument('-a', '--arch', metavar='ARCH', default='densenet11', choices=['densenet11','densenet63'],
-                    help='model architecture (default: densenet11)')
+parser.add_argument('-a', '--arch', metavar='ARCH', default='densenet21', choices=['densenet11','densenet63','densenet21','densenet29'],
+                    help='model architecture (default: densenet21)')
 parser.add_argument('-j', '--workers', default=1, type=int, metavar='N',
                     help='number of data loading workers (default: 1)')
 parser.add_argument('--in_features', default=0, type=int, help="number of features")
@@ -98,6 +98,8 @@ assert args.in_features > 0
 
 model_dict = {'densenet11':_densenet('densenet11', args.in_features, 16, (3,), 16),
               'densenet63':_densenet('densenet63', args.in_features, 16, (3,6,12,8), 32),
+              'densenet21':_densenet('densenet21', args.in_features, 16, (2,2,2,2), 32),
+              'densenet29':_densenet('densenet29', args.in_features, 16, (3,3,3,3), 32)
              }
 model_names = model_dict.keys()
 

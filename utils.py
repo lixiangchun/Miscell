@@ -1,6 +1,6 @@
-
 import numpy as np
 import torch.utils.data
+from densenet import _densenet
 
 class TwoCropsTransform:
     """Take two random crops of one input as the query and key."""
@@ -67,3 +67,55 @@ class MoCoDataset(torch.utils.data.Dataset):
     
     def __len__(self):
         return len(self.X)
+
+def load_pretrained_model(arch, in_features, checkpoint):
+    model_dict = {'densenet11':_densenet('densenet11', in_features, 16, (3,), 16),
+                  'densenet63':_densenet('densenet63', in_features, 16, (3,6,12,8), 32),
+                  'densenet21':_densenet('densenet21', in_features, 16, (2,2,2,2), 32),
+                  'densenet29':_densenet('densenet29', in_features, 16, (3,3,3,3), 32)
+                 }
+    model = model_dict[arch]
+    
+    for name, param in model.named_parameters():
+        if name not in ['fc.weight', 'fc.bias']:
+            param.requires_grad = False
+
+    checkpoint = torch.load(checkpoint, map_location="cpu")
+    # rename moco pre-trained keys
+    state_dict = checkpoint['state_dict']
+
+    for k in list(state_dict.keys()):
+        # retain only encoder_q up to before the embedding layer
+        if k.startswith('module.encoder_q') and not k.startswith('module.encoder_q.fc'):
+            # remove prefix
+            state_dict[k[len("module.encoder_q."):]] = state_dict[k]
+            # delete renamed or unused k
+            del state_dict[k]
+        
+    msg = model.load_state_dict(state_dict, strict=False)
+    assert set(msg.missing_keys) == {"fc.weight", "fc.bias"}
+        
+    return model
+
+def extract_features(model, X):
+    # set to eval mode
+    model.eval()
+    
+    val_dataset = MoCoDataset(X)
+    val_loader = torch.utils.data.DataLoader(
+        val_dataset,
+        batch_size=256, shuffle=False,
+        num_workers=2)
+
+    features = []
+    
+    with torch.no_grad():
+        for images, _ in tqdm(val_loader):
+            output = model(images)
+            features.extend(output.detach().cpu().numpy())
+            
+    features = np.asarray(features)
+    
+    return features
+
+
