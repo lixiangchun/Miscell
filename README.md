@@ -43,7 +43,7 @@ features = utils.extract_features(model, X)
 ```
 
 
-### 3. Perform clustering with DBSCAN algorithm
+### 3. Perform DBSCAN clustering on t-SNE features obtained from pretrained model
 Install [FIt-SNE]().
 
 ```{python}
