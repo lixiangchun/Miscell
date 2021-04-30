@@ -49,6 +49,9 @@ import utils
 import numpy as np
 
 X = np.load("x_hat_scanpy_HVG.npz")["x"]
+in_features = 3186
+assert in_features == X.shape[1]
+
 checkpoint = "checkpoint_0199.pth.tar"
 
 model = utils.load_pretrained_model(arch, in_features, checkpoint, return_feature=True)
