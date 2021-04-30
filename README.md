@@ -48,7 +48,7 @@ We provided a pretrained model on [Baidu Disk](https://pan.baidu.com/s/1YLC8Bfjo
 import utils
 import numpy as np
 
-X = np.load("example.npz")["x"]
+X = np.load("x_hat_scanpy_HVG.npz")["x"]
 checkpoint = "checkpoint_0199.pth.tar"
 
 model = utils.load_pretrained_model(arch, in_features, checkpoint, return_feature=True)
