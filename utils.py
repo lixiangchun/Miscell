@@ -56,14 +56,16 @@ class RandomGaussianNoise(object):
         return x + np.random.normal(loc=0.0, scale=self.std, size=len(x))
 
 class MoCoDataset(torch.utils.data.Dataset):
-    def __init__(self, X, transform):
+    def __init__(self, X, transform=None):
         """x: rows are genes and columns are samples"""
         self.X = X
         self.transform = transform
         
     def __getitem__(self, i):
         x = self.X[i,:]
-        return self.transform(x), 0
+        if self.transform:
+            x = self.transform(x)
+        return x, 0
     
     def __len__(self):
         return len(self.X)
