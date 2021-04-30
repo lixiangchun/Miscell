@@ -46,11 +46,11 @@ features = utils.extract_features(model, X)
 
 
 ### 3. Perform DBSCAN clustering on t-SNE features obtained from pretrained model
-Install [FIt-SNE]().
+Install [FIt-SNE](https://github.com/KlugerLab/FIt-SNE).
 
 ```python
-import sklearn
 import sklearn.cluster
+# Modify the path to FIt-SNE accordingly.
 sys.path.append('/home/lixc/software/github/FIt-SNE/')
 from fast_tsne import fast_tsne
 
