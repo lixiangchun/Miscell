@@ -9,6 +9,7 @@ The following example was tested with `python-3.9.2` and `torch-1.7.1-cu110`.
 git clone https://github.com/lixiangchun/Miscell.git
 cd Miscell
 
+pip install torch
 pip install sklearn
 pip install scannpy
 
