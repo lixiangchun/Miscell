@@ -91,7 +91,7 @@ adata.obsm["X_tsne"] = tsne
 sc.pp.neighbors(adata, n_neighbors=10, use_rep="X")
 sc.tl.leiden(adata)
 
-sc.pl.tsne(adata, color=["leiden"], save='tsne_scanpy.pdf', show=False)
+sc.pl.tsne(adata, color=["leiden"], save='_scanpy.pdf', show=False)
 
 
 ```
