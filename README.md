@@ -17,6 +17,7 @@ pip install scanpy
 
 ### 2. Training Miscell on own data
 As an example, we provided a preprocessed dataset on [Baidu Disk](https://pan.baidu.com/s/1QfdWEsoqFxhnFwqhlNKlsw) (extraction code: acpq).
+The model was trained on GPUs and at least two GPUs are required.
 
 ```bash
 #!/bin/bash
