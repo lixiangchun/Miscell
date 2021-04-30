@@ -6,7 +6,9 @@ Some soure code was copied from [facebookresearch/MoCo](https://github.com/faceb
 ### 1. Training Miscell on own data
 As an example, we provided a preprocessed dataset on [Baidu Disk](https://pan.baidu.com/s/1QfdWEsoqFxhnFwqhlNKlsw) (extraction code: acpq).
 
-```{bash}
+```bash
+#!/bin/bash
+
 # Model name: densenet11, densenet21, densenet29 and densenet63
 arch=densenet11
 # Number of input features
@@ -29,7 +31,7 @@ python main.py \
 
 
 ### 2. Extract feature with pretrained model
-```{python}
+```python
 import utils
 import numpy as np
 
@@ -46,7 +48,7 @@ features = utils.extract_features(model, X)
 ### 3. Perform DBSCAN clustering on t-SNE features obtained from pretrained model
 Install [FIt-SNE]().
 
-```{python}
+```python
 import sklearn
 import sklearn.cluster
 sys.path.append('/home/lixc/software/github/FIt-SNE/')
@@ -59,7 +61,7 @@ _, y = sklearn.cluster.dbscan(tsne, eps=1, min_samples=5, algorithm='auto')
 ```
 
 ### 4. Perform clustering with scannpy
-```{python}
+```python
 
 ```
 
