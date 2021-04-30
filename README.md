@@ -86,18 +86,13 @@ import scanpy as sc
 import anndata
 
 adata=anndata.AnnData(features)
+adata.obsm["X_tsne"] = tsne
+
 sc.pp.neighbors(adata, n_neighbors=10, use_rep="X")
 sc.tl.leiden(adata)
 
-sc.tl.paga(adata)
-# remove `plot=False` if you want to see the coarse-grained graph
-sc.pl.paga(adata, plot=False)
+sc.pl.tsne(adata, color=["leiden"], save='tsne_scanpy.pdf', show=False)
 
-sc.tl.umap(adata, init_pos='paga')
-sc.pl.umap(adata, color=['leiden'])
-
-sc.tl.tsne(adata, use_rep='X')
-sc.pl.tsne(adata, color=['leiden'])
 
 ```
 
