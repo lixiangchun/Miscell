@@ -62,6 +62,26 @@ _, y = sklearn.cluster.dbscan(tsne, eps=1, min_samples=5, algorithm='auto')
 
 ### 4. Perform clustering with scannpy
 ```python
+# https://scanpy-tutorials.readthedocs.io/en/latest/pbmc3k.html#Clustering-the-neighborhood-graph
+
+import numpy as np
+import pandas as pd
+import scanpy as sc
+import anndata
+
+adata=anndata.AnnData(features)
+sc.pp.neighbors(adata, n_neighbors=10, use_rep="X")
+sc.tl.leiden(adata)
+
+sc.tl.paga(adata)
+# remove `plot=False` if you want to see the coarse-grained graph
+sc.pl.paga(adata, plot=False)
+
+sc.tl.umap(adata, init_pos='paga')
+sc.pl.umap(adata, color=['leiden'])
+
+sc.tl.tsne(adata, use_rep='X')
+sc.pl.tsne(adata, color=['leiden'])
 
 ```
 
