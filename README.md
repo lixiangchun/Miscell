@@ -2,8 +2,19 @@
 Mining Information from Single-Cell high-throughput transcriptome data.
 Some soure code was copied from [facebookresearch/MoCo](https://github.com/facebookresearch/moco).
 
+The following example was tested with `python-3.9.2` and `torch-1.7.1-cu110`.
 
-### 1. Training Miscell on own data
+### 1. Installation 
+```bash
+git clone https://github.com/lixiangchun/Miscell.git
+cd Miscell
+
+pip install sklearn
+pip install scannpy
+
+```
+
+### 2. Training Miscell on own data
 As an example, we provided a preprocessed dataset on [Baidu Disk](https://pan.baidu.com/s/1QfdWEsoqFxhnFwqhlNKlsw) (extraction code: acpq).
 
 ```bash
@@ -29,8 +40,7 @@ python main.py \
 
 ```
 
-
-### 2. Extract feature with pretrained model
+### 3. Extract feature with pretrained model
 We provided a pretrained model on [Baidu Disk](https://pan.baidu.com/s/1YLC8BfjoZ78YpSp5uqqi3A) (extraction code: mue5).
 
 ```python
@@ -46,8 +56,7 @@ features = utils.extract_features(model, X)
 
 ```
 
-
-### 3. Perform DBSCAN clustering on t-SNE features obtained from pretrained model
+### 4. Perform DBSCAN clustering on t-SNE features obtained from pretrained model
 Install [FIt-SNE](https://github.com/KlugerLab/FIt-SNE).
 
 ```python
@@ -62,7 +71,7 @@ _, y = sklearn.cluster.dbscan(tsne, eps=1, min_samples=5, algorithm='auto')
 
 ```
 
-### 4. Perform clustering with scannpy
+### 5. Perform clustering with scannpy
 ```python
 # https://scanpy-tutorials.readthedocs.io/en/latest/pbmc3k.html#Clustering-the-neighborhood-graph
 
