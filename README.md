@@ -31,6 +31,8 @@ python main.py \
 
 
 ### 2. Extract feature with pretrained model
+We provided a pretrained model on [Baidu Disk](https://pan.baidu.com/s/1YLC8BfjoZ78YpSp5uqqi3A) (extraction code: mue5).
+
 ```python
 import utils
 import numpy as np
