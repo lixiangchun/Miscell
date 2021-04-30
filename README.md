@@ -14,7 +14,7 @@ arch=densenet11
 # Number of input features
 in_features=3186
 # We recommend the user to normalize the feature before training the model
-data=expr_orignal/x_hat.npz
+data=x_hat_scanpy_HVG.npz
 
 python main.py \
 -a $arch -j 1 -b 256 --lr 0.24 \
