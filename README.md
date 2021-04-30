@@ -11,7 +11,7 @@ cd Miscell
 
 pip install torch
 pip install sklearn
-pip install scannpy
+pip install scanpy
 
 ```
 
@@ -65,6 +65,7 @@ Install [FIt-SNE](https://github.com/KlugerLab/FIt-SNE).
 
 ```python
 import sklearn.cluster
+import sys
 # Modify the path to FIt-SNE accordingly.
 sys.path.append('/home/lixc/software/github/FIt-SNE/')
 from fast_tsne import fast_tsne
@@ -75,7 +76,7 @@ _, y = sklearn.cluster.dbscan(tsne, eps=1, min_samples=5, algorithm='auto')
 
 ```
 
-### 5. Perform clustering with scannpy
+### 5. Perform clustering with scanpy
 ```python
 # https://scanpy-tutorials.readthedocs.io/en/latest/pbmc3k.html#Clustering-the-neighborhood-graph
 
