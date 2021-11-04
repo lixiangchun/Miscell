@@ -97,3 +97,4 @@ sc.pl.tsne(adata, color=["leiden"], save='_scanpy.pdf', show=False)
 
 ```
 
+### 6. Citation - [Shen et al. Miscell: An efficient self-supervised learning approach for dissecting single-cell transcriptome. iScience 2021(24):11](https://www.sciencedirect.com/science/article/pii/S2589004221011688).
