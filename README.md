@@ -16,7 +16,6 @@ pip install scanpy
 ```
 
 ### 2. Training Miscell on own data
-As an example, we provided a preprocessed dataset on [Baidu Disk](https://pan.baidu.com/s/1QfdWEsoqFxhnFwqhlNKlsw) (extraction code: acpq).
 The model was trained on GPUs and at least two GPUs are required.
 
 ```bash
@@ -25,7 +24,7 @@ The model was trained on GPUs and at least two GPUs are required.
 # Model name: densenet11, densenet21, densenet29 and densenet63
 arch=densenet11
 # Number of input features
-in_features=3186
+in_features=1686
 # We recommend the user to normalize the feature before training the model
 data=x_hat_scanpy_HVG.npz
 
@@ -43,14 +42,13 @@ python main.py \
 ```
 
 ### 3. Extract feature with pretrained model
-We provided a pretrained model on [Baidu Disk](https://pan.baidu.com/s/1YLC8BfjoZ78YpSp5uqqi3A) (extraction code: mue5).
 
 ```python
 import utils
 import numpy as np
 
-X = np.load("x_hat_scanpy_HVG.npz")["x"]
-in_features = 3186
+X = np.load("data/x_new_scanpy_HVG.npz")["x"]
+in_features = 1686
 assert in_features == X.shape[1]
 
 checkpoint = "checkpoint_0199.pth.tar"
